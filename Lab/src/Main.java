@@ -1,3 +1,4 @@
+import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
@@ -10,13 +11,28 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Введите число: ");
-        int number = scanner.nextInt();
-        int coins [] = {1,5,10,25,50};
-        System.out.println("Количество комбинаций: " + coinChange(coins, number));
-        int[] dimensions = {10, 30, 5, 60}; // Размеры матриц: A1(10x30), A2(30x5), A3(5x60)
+//        System.out.print("Введите число: ");
+//        int number = scanner.nextInt();
+//        int coins [] = {1,5,10,25,50};
+//        System.out.println("Количество комбинаций: " + coinChange(coins, number));
+
+//        int[] dimensions = {10, 30, 5,60}; // Размеры матриц: A1(10x30), A2(30x5), A3(5x60)
+//        System.out.println("Минимальное количество операций: " + matrixChainOrder(dimensions));
+        Random random = new Random();
+        int numMatrices =1000; // Количество матриц
+        int[] dimensions = new int[numMatrices + 1]; // Размеры матриц
+
+        // Генерируем случайные размеры матриц
+        for (int i = 0; i < numMatrices + 1; i++) {
+            dimensions[i] = random.nextInt(100) + 1; // Генерируем случайное число от 1 до 100
+        }
+        long startTime = System.nanoTime();
         System.out.println("Минимальное количество операций: " + matrixChainOrder(dimensions));
+        long endTime = System.nanoTime();
+        System.out.println("Time taken to sort array: " + ((endTime - startTime)/1000000) + " ms");
+
         scanner.close();
+
 
         for (int i = 0; i < NUM_ELEMENTS; i++) {
             int value = (int) (Math.random() * 100);
@@ -24,24 +40,24 @@ public class Main {
         }
 
         System.out.println("\n selectionSort:");
-        long startTime = System.nanoTime();
+        startTime = System.nanoTime();
         selectionSort(arr1);
-        long endTime = System.nanoTime();
-        System.out.println("Time taken to sort array: " + ((endTime - startTime)/1000000) + " ms");
+        endTime = System.nanoTime();
+        System.out.println("Time taken to sort array: " + ((endTime - startTime)/1000) + " ms");
 
         System.out.println("\n mergeSort:");
         fillingArray();
         startTime = System.nanoTime();
         mergeSort(arr1, 0,NUM_ELEMENTS-1);
         endTime = System.nanoTime();
-        System.out.println("Time taken to sort array: " + ((endTime - startTime)/1000000) + " ms");
+        System.out.println("Time taken to sort array: " + ((endTime - startTime)/1000) + " ms");
 
         System.out.println("\n findMax:");
         fillingArray();
         startTime = System.nanoTime();
         findMax(arr1);
         endTime = System.nanoTime();
-        System.out.println("Time taken to sort array: " + ((endTime - startTime)/1000000) + " ms");
+        System.out.println("Time taken to sort array: " + ((endTime - startTime)/1000) + " ms");
 
 
     }
@@ -65,6 +81,14 @@ public class Main {
         return include + exclude;
     }
 
+    public static int[] generateRandomDimensions(int size) {
+        Random random = new Random();
+        int[] dimensions = new int[size];
+        for (int i = 0; i < size; i++) {
+            dimensions[i] = random.nextInt(100) + 1; // Случайное число от 1 до 100
+        }
+        return dimensions;
+    }
 
     public static int matrixChainOrder(int[] dimensions) {
         int n = dimensions.length - 1; // Количество матриц
